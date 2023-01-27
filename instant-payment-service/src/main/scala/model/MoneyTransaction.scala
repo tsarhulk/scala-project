@@ -2,6 +2,9 @@ package model
 
 import java.util.UUID
 
+// проведение транзакции
+case class Transaction(id: UUID, money: Int)
+
 // пополнение счёта
 case class RefillMoney(id: UUID, money: Int)
 

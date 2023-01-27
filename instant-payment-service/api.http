@@ -1,0 +1,52 @@
+// работа с файлами данного типа доступна только в intellij idea версии ultimate
+// как и прямая работа с базой данных (я про отсутствие справа меню database)
+
+GET http://localhost:8080/users
+
+###
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{"phoneNumber": "88005553535", "money": 4500}
+
+###
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{"phoneNumber": "89003332211", "money": 100}
+
+###
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{"phoneNumber": "89990005522", "money": 100}
+###
+GET http://localhost:8080/user/3a445ef0-6e51-4820-ad2a-92a9bd03cbc0
+
+###
+PUT http://localhost:8080/user
+Content-Type: application/json
+
+{"id": "3a445ef0-6e51-4820-ad2a-92a9bd03cbc0", "phoneNumber": "+7(999)000-55-22"}
+
+###
+DELETE http://localhost:8080/user/5978763e-1bfb-423c-bc0e-8b5b7d9ca7fb
+
+###
+PUT http://localhost:8080/user/money/refill
+Content-Type: application/json
+
+{"id": "3a445ef0-6e51-4820-ad2a-92a9bd03cbc0", "money": 1}
+
+###
+PUT http://localhost:8080/user/money/withdraw
+Content-Type: application/json
+
+{"id": "3a445ef0-6e51-4820-ad2a-92a9bd03cbc0", "money": 1}
+
+###
+PUT http://localhost:8080/transaction
+Content-Type: application/json
+
+{"senderId": "798b7389-a88a-4411-aff8-23a7cfca93de", "recipientId": "3a445ef0-6e51-4820-ad2a-92a9bd03cbc0",
+  "money": 1000, "category": 0}

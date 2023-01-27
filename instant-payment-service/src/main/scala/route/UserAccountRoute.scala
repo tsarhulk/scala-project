@@ -37,16 +37,16 @@ class UserAccountRoute (repository: UserAccountRepository) extends FailFastCirce
           complete(repository.delete(id))
         }
       } ~
-      (put & path("user" / "money" / "refill") & parameters("id".as[UUID], "money".as[Int])) {
-        (id, money) => // пополняем счёт
-          onSuccess(repository.refillMoney(RefillMoney(id, money))) {
+      (put & path("user" / "money" / "refill") & entity(as[RefillMoney])) {
+        refillMoney => // пополняем счёт
+          onSuccess(repository.refillMoney(refillMoney)) {
             case Right(value) => complete(value)
             case Left(s) => complete(StatusCodes.NotAcceptable, s)
           }
       } ~
-      (put & path("user" / "money" / "withdraw") & parameters("id".as[UUID], "money".as[Int])) {
-        (id, money) => // списываем деньги со счёта
-          onSuccess(repository.withdrawMoney(WithdrawMoney(id, money))) {
+      (put & path("user" / "money" / "withdraw") & entity(as[WithdrawMoney])) {
+        withdrawMoney => // списываем деньги со счёта
+          onSuccess(repository.withdrawMoney(withdrawMoney)) {
             case Right(value) => complete(value)
             case Left(s) => complete(StatusCodes.NotAcceptable, s)
           }
