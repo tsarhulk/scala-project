@@ -68,6 +68,15 @@ class UserAccountRepositoryDb(implicit val ec: ExecutionContext, db: Database) e
   override def withdrawMoney(transaction: WithdrawMoney): Future[Either[String, UserAccount]] =
     transactionMoney(Transaction(transaction.id, -transaction.money))
 
+  private val categoryCashback = Map(
+    0 -> 0.00, //кэшбэк на переводы
+    1 -> 0.01, //кэшбэк на все покупки
+    2 -> 0.05, //повышенный кэшбэк на выбранные категории (например, сопрттовары, красота и прочее)
+    3 -> 0.1, //повышенный кэшбэк у партнёров
+    4 -> 0.15 //кэшбэк дня
+  )
+  private val defaultCashback = 0.00
+
   override def moneyTransfer(transaction: MoneyTransfer): Future[Either[String, ChangeMoneyResult]] = {
     val sender = users.filter(_.id === transaction.senderId).map(_.money) //отправитель
     val recipient = users.filter(_.id === transaction.recipientId).map(_.money) //получатель
@@ -77,11 +86,16 @@ class UserAccountRepositoryDb(implicit val ec: ExecutionContext, db: Database) e
       recipientOpt <- db.run(recipient.result.headOption)
 
       buffer = transaction.money
-      // в скором времени здесь будет кешбэк
+
+      //кешбэк
+      cashbackMoney = (
+        buffer.toDouble * categoryCashback.getOrElse(transaction.category, defaultCashback)).toInt
+      bufferWithCashback = buffer - cashbackMoney
+
       senderUpd = senderOpt.map {
         senderMoney => {
-          if (senderMoney >= buffer)
-            Right(senderMoney - buffer)
+          if (senderMoney >= bufferWithCashback)
+            Right(senderMoney - bufferWithCashback)
           else
             Left("На вашем счете недостаточно средств для проведения данной операции")}}.getOrElse(Left("Элемент не найден"))
 
