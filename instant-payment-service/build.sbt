@@ -1,6 +1,6 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-ThisBuild / scalaVersion := "2.13.8"
+Global / scalaVersion := "2.13.8"
 
 val akkaVersion = "2.6.18"
 val akkaHttpVersion = "10.2.7"
@@ -30,3 +30,5 @@ lazy val root = (project in file("."))
         "ch.qos.logback" % "logback-classic" % "1.2.3"
     )
   )
+
+enablePlugins(JavaAppPackaging)

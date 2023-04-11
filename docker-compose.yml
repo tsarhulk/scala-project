@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres-scala
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  instant-payment-service:
+    image: instant-payment-service
+    container_name: scala-project
+    build:
+      dockerfile: docker/Dockerfile
+      context: ./
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+    ports:
+      - 8080:8080

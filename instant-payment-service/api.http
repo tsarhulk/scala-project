@@ -21,32 +21,39 @@ Content-Type: application/json
 
 {"phoneNumber": "89990005522", "money": 100}
 ###
-GET http://localhost:8080/user/3a445ef0-6e51-4820-ad2a-92a9bd03cbc0
+GET http://localhost:8080/user/e09b347c-0a32-4b40-b9f2-8baa7b22f542
 
 ###
 PUT http://localhost:8080/user
 Content-Type: application/json
 
-{"id": "3a445ef0-6e51-4820-ad2a-92a9bd03cbc0", "phoneNumber": "+7(999)000-55-22"}
+{"id": "e09b347c-0a32-4b40-b9f2-8baa7b22f542", "phoneNumber": "+7(999)000-55-22"}
 
 ###
-DELETE http://localhost:8080/user/5978763e-1bfb-423c-bc0e-8b5b7d9ca7fb
+DELETE http://localhost:8080/user/e1a792fc-deb0-41be-83ea-ca9650621f01
 
 ###
 PUT http://localhost:8080/user/money/refill
 Content-Type: application/json
 
-{"id": "3a445ef0-6e51-4820-ad2a-92a9bd03cbc0", "money": 1}
+{"id": "e09b347c-0a32-4b40-b9f2-8baa7b22f542", "money": 100}
 
 ###
 PUT http://localhost:8080/user/money/withdraw
 Content-Type: application/json
 
-{"id": "3a445ef0-6e51-4820-ad2a-92a9bd03cbc0", "money": 1}
+{"id": "e09b347c-0a32-4b40-b9f2-8baa7b22f542", "money": 100}
 
 ###
 PUT http://localhost:8080/transaction
 Content-Type: application/json
 
-{"senderId": "798b7389-a88a-4411-aff8-23a7cfca93de", "recipientId": "3a445ef0-6e51-4820-ad2a-92a9bd03cbc0",
+{"senderId": "77acdf99-8ee1-4197-a673-502ad8b722bd", "recipientId": "e09b347c-0a32-4b40-b9f2-8baa7b22f542",
   "money": 1000, "category": 0}
+
+###
+PUT http://localhost:8080/transaction
+Content-Type: application/json
+
+{"senderId": "e09b347c-0a32-4b40-b9f2-8baa7b22f542", "recipientId": "77acdf99-8ee1-4197-a673-502ad8b722bd",
+  "money": 1000, "category": 4}
