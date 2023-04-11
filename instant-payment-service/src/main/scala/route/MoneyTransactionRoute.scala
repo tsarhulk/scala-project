@@ -9,14 +9,13 @@ import akka.http.scaladsl.server.Route
 import de.heikoseeberger.akkahttpcirce._
 import io.circe.generic.auto._
 
-class MoneyTransactionRoute (repository: UserAccountRepository) extends FailFastCirceSupport {
-  def route: Route = path("transaction") {
-    (put & entity(as[MoneyTransfer])) {
-      moneyTransfer =>
-      onSuccess(repository.moneyTransfer(moneyTransfer)) {
-        case Right(value) => complete(value)
-        case Left(s) => complete(StatusCodes.NotAcceptable, s)
-      }
+class MoneyTransactionRoute(repository: UserAccountRepository) extends FailFastCirceSupport {
+    def route: Route = path("transaction") {
+        (put & entity(as[MoneyTransfer])) { moneyTransfer =>
+            onSuccess(repository.moneyTransfer(moneyTransfer)) {
+                case Right(value) => complete(value)
+                case Left(s) => complete(StatusCodes.NotAcceptable, s)
+            }
+        }
     }
-  }
 }
